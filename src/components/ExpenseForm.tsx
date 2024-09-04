@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { categories } from "../data/categories";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-import { DraftExpense } from "../types";
+import { DraftExpense, Value } from "../types";
 
 const ExpenseForm = () => {
   const [expense, setExpense] = useState<DraftExpense>({
@@ -12,6 +12,21 @@ const ExpenseForm = () => {
     category: "",
     date: new Date(),
   });
+
+  const handleChangeDate = (date: Value) => {
+    console.log(date);
+
+    setExpense({ ...expense, date: date });
+  };
+
+  const handleChange = (
+    e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+    const isAmountField = ["amount"].includes(name);
+
+    setExpense({ ...expense, [name]: isAmountField ? +value : value });
+  };
 
   return (
     <form className="space-y-5">
@@ -30,6 +45,7 @@ const ExpenseForm = () => {
           className="bg-slate-100 p-2"
           name="expenseName"
           value={expense.expenseName}
+          onChange={handleChange}
         />
       </div>
 
@@ -44,6 +60,7 @@ const ExpenseForm = () => {
           className="bg-slate-100 p-2"
           name="amount"
           value={expense.amount}
+          onChange={handleChange}
         />
       </div>
 
@@ -56,6 +73,7 @@ const ExpenseForm = () => {
           className="bg-slate-100 p-2"
           name="category"
           value={expense.category}
+          onChange={handleChange}
         >
           <option value=""> --- Seleccione ---</option>
 
@@ -74,6 +92,7 @@ const ExpenseForm = () => {
         <DatePicker
           className="bg-slate-100 p-2 border-0"
           value={expense.date}
+          onChange={handleChangeDate}
         />
       </div>
 
