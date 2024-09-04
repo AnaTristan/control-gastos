@@ -3,12 +3,15 @@ import { categories } from "../data/categories";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
 import "react-calendar/dist/Calendar.css";
-
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+import { DraftExpense } from "../types";
 
 const ExpenseForm = () => {
-  const [value, onChange] = useState<Value>(new Date());
+  const [expense, setExpense] = useState<DraftExpense>({
+    amount: 0,
+    expenseName: "",
+    category: "",
+    date: new Date(),
+  });
 
   return (
     <form className="space-y-5">
@@ -26,6 +29,7 @@ const ExpenseForm = () => {
           placeholder="Añade el nombre del gasto"
           className="bg-slate-100 p-2"
           name="expenseName"
+          value={expense.expenseName}
         />
       </div>
 
@@ -39,6 +43,7 @@ const ExpenseForm = () => {
           placeholder="Añade la cantidad del gasto: ej.300"
           className="bg-slate-100 p-2"
           name="amount"
+          value={expense.amount}
         />
       </div>
 
@@ -46,7 +51,12 @@ const ExpenseForm = () => {
         <label htmlFor="category" className="text-xl">
           Categoria
         </label>
-        <select id="category" className="bg-slate-100 p-2" name="category">
+        <select
+          id="category"
+          className="bg-slate-100 p-2"
+          name="category"
+          value={expense.category}
+        >
           <option value=""> --- Seleccione ---</option>
 
           {categories.map((category) => (
@@ -63,8 +73,7 @@ const ExpenseForm = () => {
         </label>
         <DatePicker
           className="bg-slate-100 p-2 border-0"
-          onChange={onChange}
-          value={value}
+          value={expense.date}
         />
       </div>
 
