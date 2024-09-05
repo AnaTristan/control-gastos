@@ -1,14 +1,14 @@
 import { formatCurrency } from "../helpers";
 
 type AmountDisplayprops = {
-  label: string;
+  label?: string;
   amount: number;
 };
 
 const AmountDisplay = ({ label, amount }: AmountDisplayprops) => {
   return (
     <p className="text-2xl text-blue-600 font-bold">
-      {label}:{""}
+      {label && `${label}: `}
       <span className="text-black">{formatCurrency(amount)}</span>
     </p>
   );
