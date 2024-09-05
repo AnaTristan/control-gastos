@@ -7,6 +7,7 @@ Este proyecto con la finalidad de establecer un presupuesto y lelvar el control 
 - HeadlessUi
 - React-Date-Picker
 - React-Calendar
+- uuid
 
 # How to run
 
