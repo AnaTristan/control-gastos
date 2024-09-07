@@ -18,7 +18,7 @@ function App() {
         </h1>
       </header>
 
-      <div className="maxw-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
+      <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
         {isValidBudget ? <Budgetracker /> : <BudgetForm />}
       </div>
 
