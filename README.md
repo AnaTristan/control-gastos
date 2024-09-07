@@ -8,6 +8,7 @@ Este proyecto con la finalidad de establecer un presupuesto y lelvar el control 
 - React-Date-Picker
 - React-Calendar
 - uuid
+- react-swipeable-list
 
 # How to run
 
