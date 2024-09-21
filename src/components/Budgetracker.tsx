@@ -1,19 +1,8 @@
 import AmountDisplay from "./AmountDisplay";
 import { useBudget } from "../hooks/useBudget";
-import { useMemo } from "react";
 
 const Budgetracker = () => {
-  const { state } = useBudget();
-
-  const totalExpenses = useMemo(
-    () => state.expenses.reduce((total, expense) => total + expense.amount, 0),
-    [state.expenses]
-  );
-
-  const totalAvailable = useMemo(
-    () => state.budget - totalExpenses,
-    [state.expenses]
-  );
+  const { state, totalExpenses, remainingBudget } = useBudget();
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
@@ -29,7 +18,7 @@ const Budgetracker = () => {
           </button>
 
           <AmountDisplay label="Presupuesto" amount={state.budget} />
-          <AmountDisplay label="Disponible" amount={totalAvailable} />
+          <AmountDisplay label="Disponible" amount={remainingBudget} />
           <AmountDisplay label="Gastado" amount={totalExpenses} />
         </div>
       </div>

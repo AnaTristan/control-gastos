@@ -16,7 +16,8 @@ const ExpenseForm = () => {
   });
 
   const [error, setError] = useState("");
-  const { state, dispatch } = useBudget();
+  const [previusAmount, setPreviusAmount] = useState(0);
+  const { state, dispatch, remainingBudget } = useBudget();
 
   useEffect(() => {
     if (state.editingId) {
@@ -25,6 +26,7 @@ const ExpenseForm = () => {
       )[0];
 
       setExpense(editedElement);
+      setPreviusAmount(editedElement.amount);
     }
   }, [state.editingId]);
 
@@ -48,6 +50,13 @@ const ExpenseForm = () => {
     // validar campos vacios
     if (Object.values(expense).includes("")) {
       setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    // validacion para no sobregirar presupuesto
+
+    if (expense.amount - previusAmount > remainingBudget) {
+      setError("El gasto excede el presupuesto");
       return;
     }
 

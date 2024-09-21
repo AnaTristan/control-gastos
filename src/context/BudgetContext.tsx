@@ -1,4 +1,4 @@
-import { useReducer, createContext, Dispatch, ReactNode } from "react";
+import { useReducer, useMemo, createContext, Dispatch, ReactNode } from "react";
 import {
   BudgetReducer,
   BudgetState,
@@ -9,6 +9,8 @@ import {
 type BudgetContextProps = {
   state: BudgetState;
   dispatch: Dispatch<BudgetActions>;
+  totalExpenses: number;
+  remainingBudget: number;
 };
 
 type BudgetProviderProps = {
@@ -22,9 +24,25 @@ export const BugdetContext = createContext<BudgetContextProps>(null!);
 export const BudgetProvider = ({ children }: BudgetProviderProps) => {
   const [state, dispatch] = useReducer(BudgetReducer, InitialState);
 
+  const totalExpenses = useMemo(
+    () =>
+      state.expenses.reduce(
+        (total: number, expense: { amount: number }) => total + expense.amount,
+        0
+      ),
+    [state.expenses]
+  );
+
+  const remainingBudget = useMemo(
+    () => state.budget - totalExpenses,
+    [state.expenses]
+  );
+
   // Aqui conectamos el provider con el context
   return (
-    <BugdetContext.Provider value={{ state, dispatch }}>
+    <BugdetContext.Provider
+      value={{ state, dispatch, totalExpenses, remainingBudget }}
+    >
       {children}
     </BugdetContext.Provider>
   );
