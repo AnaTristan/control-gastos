@@ -1,6 +1,5 @@
 import { v4 as uuid } from "uuid";
 import { DraftExpense, Expense } from "../types";
-import ExpenseModal from "../components/ExpenseModal";
 
 export type BudgetActions =
   | {
