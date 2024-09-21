@@ -20,17 +20,18 @@ const ExpenseForm = () => {
 
   useEffect(() => {
     if (state.editingId) {
-      const editedElement = state.expenses.filter((expense) => {
-        expense.id === state.editingId;
-      })[0];
+      const editedElement = state.expenses.filter(
+        (expense) => expense.id === state.editingId
+      )[0];
+
+      console.log("editedElement", editedElement);
 
       setExpense(editedElement);
     }
   }, [state.editingId]);
 
   const handleChangeDate = (date: Value) => {
-    console.log(date);
-
+    // console.log(date);
     setExpense({ ...expense, date: date });
   };
 
@@ -52,7 +53,17 @@ const ExpenseForm = () => {
       return;
     }
 
-    dispatch({ type: "add-expense", payload: { expense } });
+    // Agregar o actualizar gasto
+
+    if (state.editingId) {
+      dispatch({
+        type: "update-expense",
+        payload: { expense: { id: state.editingId, ...expense } },
+      });
+    } else {
+      dispatch({ type: "add-expense", payload: { expense } });
+    }
+
     setExpense({ amount: 0, expenseName: "", category: "", date: new Date() });
   };
 
