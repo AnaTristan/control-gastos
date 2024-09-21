@@ -9,6 +9,7 @@ Este proyecto con la finalidad de establecer un presupuesto y lelvar el control 
 - React-Calendar
 - uuid
 - react-swipeable-list
+- react-circular-progressbar
 
 # How to run
 
